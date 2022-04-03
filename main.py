@@ -5,7 +5,7 @@ from datetime import date
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
-from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
+from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user
 from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 from flask_gravatar import Gravatar
 from functools import wraps
@@ -22,6 +22,7 @@ Bootstrap(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
@@ -36,14 +37,14 @@ gravatar = Gravatar(app,
                     use_ssl=False,
                     base_url=None)
 
-
-##CONNECT TO DB
+# CONNECT TO DB
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 db = SQLAlchemy(app)
 
 
-##CONFIGURE TABLES
+# CONFIGURE TABLES
 
 class BlogPost(db.Model):
     __tablename__ = "blog_posts"
@@ -57,6 +58,7 @@ class BlogPost(db.Model):
     body = db.Column(db.Text, nullable=False)
     img_url = db.Column(db.String(250), nullable=False)
 
+
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -65,6 +67,7 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(250), nullable=False)
     posts = relationship("BlogPost", back_populates="author")
     comments = relationship('Comment', back_populates='author')
+
 
 class Comment(db.Model):
     __tablename__ = "comments"
@@ -75,8 +78,8 @@ class Comment(db.Model):
     parent_post = relationship('BlogPost', back_populates="comments")
     text = db.Column(db.Text, nullable=False)
 
-db.create_all()
 
+db.create_all()
 
 db.create_all()
 
@@ -88,6 +91,7 @@ def admin_only(f):
             return f(*args, **kwargs)
         else:
             abort(403)
+
     return wrapper
 
 
@@ -101,7 +105,8 @@ def get_all_posts():
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-        new_user = User(email=form.email.data, password=generate_password_hash(form.password.data, salt_length=8), name=form.name.data)
+        new_user = User(email=form.email.data, password=generate_password_hash(form.password.data, salt_length=8),
+                        name=form.name.data)
         if not User.query.filter_by(email=new_user.email).first():
             db.session.add(new_user)
             db.session.commit()
