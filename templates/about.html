@@ -1,0 +1,31 @@
+{% include "header.html" %}
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url({{ url_for('static', filename='img/about-bg.jpg')}})">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+            <h1>About Me</h1>
+            <span class="subheading">This is what I do.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <p>Hello everyone! I am Ainur Mindubaev, a wannabe programmer studying backend with python/flask right now. I created (design borrowed from bootstrap) this site to study some flask features, such as: login, creating databases, forms etc.</p>
+        <p>What I can say about myself is that I most likely found my way (but I am not sure yet) as a backend developer, and I am so happy this finally happened at the age of 21. I am not that late, am I?</p>
+        <p>This paragraph is dedicated to my girl friend (or girlfriend by now, who knows), who is currently reading this text and amazed how good I am at coding. You look great today (unless you wore that awful tablecloth again)! I like it so hard when you smile and laugh that I almost feel I fell in love (nice rhyming btw, huh). I am sitting right next to you and hoping you will give me a little kiss, come on :3 I wish you best luck, Nastya, stay safe and sound and wealthy and beautiful and so on and so on!</p>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  {% include "footer.html" %}
